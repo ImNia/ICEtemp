@@ -2,8 +2,9 @@
 #define TESTICE_H
 
 #include "init.h"
+#include "simulICE.h"
 
-class testICE{
+class testICE {
     public:
         int momentInert;
         std::vector<int> torque;
@@ -11,16 +12,31 @@ class testICE{
         int overheatTemp;
         double HTorque;
         double HCrankshaft;
-        double Colling;
+        double Cooling;
 
+        double tempICE;
+        int time;
+
+        double tempEnvir;
         testICE(int momentInertTmp,
                 std::vector<int> torqueTmp,
                 std::vector<int> crankshaftSpeedTmp,
                 int overheatTempTmp,
                 double HTorqueTmp,
                 double HCrankshaftTmp,
-                double CollingTmp);
+                double CoolingTmp, double tempEnvirTmp);
         ~testICE();
+
 };
+
+double testStend(int momentInertTmp,
+                std::vector<int> torqueTmp,
+                std::vector<int> crankshaftSpeedTmp,
+                int overheatTempTmp,
+                double HTorqueTmp,
+                double HCrankshaftTmp,
+                double CoolingTmp, 
+                double tempEnvirTmp);
+
 
 #endif

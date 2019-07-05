@@ -6,13 +6,18 @@
 
 #include <cmath>
 
-class simulICE : public testICE{
+class simulICE{
+    private:
+        int speed;
     public:
-        std::vector<double> acc;
-        void calcAcc();
-        double heatICE(int torqueTmp, double HTorqueTmp, int crankshaftSpeedTmp, double HCranckshaftTmp);
-        double coolingICE(double coolingICETmp, double tempEnvirTmp, double tempICETmp);
-        double getTempICE(std::vector<double> torqueTmp, double HTorqueTmp, std::vector<double> crankshaftSpeedTmp, double HCranckshaftTmp, double coolingICETmp, double tempEnvirTmp, double tempICETmp);
+        simulICE();
+        ~simulICE();
+        double accCalc(int torque, int momentTnert);
+        double heat(int torque, double HTorque, int crankshaftSpeed, double HCrankshaft);
+        double cooling(double cooling, double tempEnvir, double tempICE);
+        double getTempICE(double heat, double acc, double cooling);
 };
+
+//double getTempICE(auto &obj, double torqueTmp, double crankshaftSpeedTmp);
 
 #endif

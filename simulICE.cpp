@@ -1,28 +1,32 @@
 #include "simulICE.h"
+/*
+   double getTempICE(testICE &obj, double torqueTmp, double crankshaftSpeedTmp){
+   double acc = torqueTmp / obj.momentInert;
 
-void simulICE::calcAcc(){
-    double tmp = 0;
-    for(int i = 0; i < (int)crankshaftSpeed.size(); i++){
-        tmp = crankshaftSpeed[i] / momentInert;
-        acc.push_back(tmp);
-    }
+   double heat = (torqueTmp * obj.HTorque) + (pow(crankshaftSpeedTmp, 2) * obj.HCrankshaft);
+   double cooling = obj.Cooling * (obj.tempEnvir - obj.tempICE);
+   return heat * cooling / acc;
+   }
+   */
+double simulICE::accCalc(int torque, int momentTnert){
+    if(torque == 0)
+        return 1;
+    return torque / momentTnert;
 }
 
-double simulICE::heatICE(int torqueTmp, double HTorqueTmp, int crankshaftSpeedTmp, double HCranckshaftTmp){
-    return (torqueTmp * HTorqueTmp) + (pow(crankshaftSpeedTmp, 2) * HCranckshaftTmp);
+double simulICE::heat(int torque, double HTorque, int crankshaftSpeed, double HCrankshaft){
+    return (torque * HTorque) + pow(crankshaftSpeed, 2) * HCrankshaft;
+}
+double simulICE::cooling(double cooling, double tempEnvir, double tempICE){
+    return cooling * (tempEnvir - tempICE);
+}
+double simulICE::getTempICE(double heat, double acc, double cooling){
+    return (heat - cooling) / sqrt(acc);
 }
 
-double simulICE::coolingICE(double coolingICETmp, double tempEnvirTmp, double tempICETmp){
-    return coolingICETmp * (tempEnvirTmp - tempICETmp);
+simulICE::simulICE(){
+    this->speed = 0;
 }
 
-double simulICE::getTempICE(std::vector<double> torqueTmp, double HTorqueTmp, std::vector<double> crankshaftSpeedTmp, double HCranckshaftTmp, double coolingICETmp, double tempEnvirTmp, double tempICETmp){
-    double tmp;
-    for(int i = 0; i < (int)torqueTmp.size(); i++){
-        double heat = heatICE(torqueTmp[i], HTorqueTmp, crankshaftSpeedTmp[i], HCranckshaftTmp);
-        double cooling = coolingICE(coolingICETmp, tempEnvirTmp, tempICETmp);
-        tmp = heat * cooling / acc[i];
-    }
-    return sqrt(tmp);
+simulICE::~simulICE(){
 }
-
