@@ -20,14 +20,15 @@ double testStend(int momentInertTmp,
             heatT = startICE.heat(tmp.torque[i], tmp.HTorque, tmp.crankshaftSpeed[i], tmp.HCrankshaft);
             coolingT = startICE.cooling(tmp.Cooling, tmp.tempEnvir, tmp.tempICE);
             tempCurr = (double)startICE.getTempICE(heatT, acc, coolingT);
-            tmp.tempICE += tempCurr;
+            tmp.tempICE += tempCurr * 0.01;
             tmp.time++;
         }
-            std::cout << acc << ' ' << heatT << ' ' << coolingT << ' ' << tempCurr << std::endl;
-            std::cout << tmp.tempICE << std::endl;
+//            std::cout << coolingT << ' ' << tempCurr << std::endl;
+//            std::cout << tmp.tempICE << ' ' << tmp.time << std::endl;
     }
+    double time = tmp.time;
 
-    return tmp.time;
+    return time;
 }
 
 testICE::testICE(int momentInertTmp,

@@ -1,5 +1,5 @@
 all:
-	g++ -Wall -o test *.cpp
+	g++ -Wall -g -o test *.cpp
 
 clean:
 	rm test

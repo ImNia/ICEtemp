@@ -18,6 +18,4 @@ class simulICE{
         double getTempICE(double heat, double acc, double cooling);
 };
 
-//double getTempICE(auto &obj, double torqueTmp, double crankshaftSpeedTmp);
-
 #endif
