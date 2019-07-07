@@ -5,7 +5,7 @@
 #include "simulICE.h"
 
 class testICE {
-    public:
+    private:
         int momentInert;
         std::vector<int> torque;
         std::vector<int> crankshaftSpeed;
@@ -13,8 +13,9 @@ class testICE {
         double HTorque;
         double HCrankshaft;
         double Cooling;
-
         double tempICE;
+
+    public:
         int time;
 
         double tempEnvir;
@@ -27,16 +28,22 @@ class testICE {
                 double CoolingTmp, double tempEnvirTmp);
         ~testICE();
 
+        double getTempICE();
+        void setTempICE(double temp);
+        double getOverheadTemp();
+        int torqueSize();
+        friend double getTemp(testICE &, int i);
+
 };
 
 double testStend(int momentInertTmp,
-                std::vector<int> torqueTmp,
-                std::vector<int> crankshaftSpeedTmp,
-                int overheatTempTmp,
-                double HTorqueTmp,
-                double HCrankshaftTmp,
-                double CoolingTmp, 
-                double tempEnvirTmp);
+        std::vector<int> torqueTmp,
+        std::vector<int> crankshaftSpeedTmp,
+        int overheatTempTmp,
+        double HTorqueTmp,
+        double HCrankshaftTmp,
+        double CoolingTmp, 
+        double tempEnvirTmp);
 
 
 #endif

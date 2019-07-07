@@ -10,25 +10,46 @@ double testStend(int momentInertTmp,
 
     testICE tmp(momentInertTmp, torqueTmp, crankshaftSpeedTmp,
             overheatTempTmp, HTorqueTmp, HCrankshaftTmp, CoolingTmp, tempEnvirTmp);
-    simulICE startICE;
 
-    double acc, heatT, coolingT;
-    double tempCurr = tmp.tempICE;
-    while(tmp.tempICE <= tmp.overheatTemp){
-        for(int i = 0; i < (int)tmp.torque.size(); i++){
-            acc = startICE.accCalc(tmp.torque[i], tmp.momentInert);
-            heatT = startICE.heat(tmp.torque[i], tmp.HTorque, tmp.crankshaftSpeed[i], tmp.HCrankshaft);
-            coolingT = startICE.cooling(tmp.Cooling, tmp.tempEnvir, tmp.tempICE);
-            tempCurr = (double)startICE.getTempICE(heatT, acc, coolingT);
-            tmp.tempICE += tempCurr * 0.01;
+    double tempCurr = tmp.getTempICE(); 
+
+    std::cout << tmp.torqueSize() << std::endl;
+    while(tmp.getTempICE() <= tmp.getOverheadTemp()){
+        for(int i = 0; i < tmp.torqueSize(); i++){
+            tempCurr = getTemp(tmp, i);
+            tmp.setTempICE(tempCurr);
             tmp.time++;
         }
-//            std::cout << coolingT << ' ' << tempCurr << std::endl;
-//            std::cout << tmp.tempICE << ' ' << tmp.time << std::endl;
     }
+    /*    while(tmp.tempICE <= tmp.overheatTemp){
+          for(int i = 0; i < (int)tmp.torque.size(); i++){
+          acc = accCalc(tmp.torque[i], tmp.momentInert);
+          heatT = heat(tmp.torque[i], tmp.HTorque, tmp.crankshaftSpeed[i], tmp.HCrankshaft);
+          coolingT = cooling(tmp.Cooling, tmp.tempEnvir, tmp.tempICE);
+          tempCurr = (double)getTempICE(heatT, acc, coolingT);
+          tmp.tempICE += tempCurr;
+          tmp.time++;
+          }
+    //            std::cout << coolingT << ' ' << tempCurr << std::endl;
+    //            std::cout << tmp.tempICE << ' ' << tmp.time << std::endl;
+    }*/
     double time = tmp.time;
 
     return time;
+}
+
+double testICE::getTempICE(){
+    return this->tempICE;
+}
+void testICE::setTempICE(double temp){
+    this->tempICE += temp;
+    std::cout << this->tempICE << std::endl;
+}
+double testICE::getOverheadTemp(){
+    return this->overheatTemp;
+}
+int testICE::torqueSize(){
+    return this->torque.size();
 }
 
 testICE::testICE(int momentInertTmp,
